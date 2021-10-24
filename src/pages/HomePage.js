@@ -9,7 +9,9 @@ function HomePage() {
   const { url } = useRouteMatch();
 
   useEffect(() => {
-    moviesInfoApi.getTrending().then((data) => setTrendingMovies(data.results));
+    moviesInfoApi.getTrending().then((data) => {
+      setTrendingMovies(data.results);
+    });
   }, []);
 
   return (

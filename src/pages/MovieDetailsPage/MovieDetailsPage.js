@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import {
   NavLink,
   useParams,
@@ -7,10 +7,11 @@ import {
   useLocation,
   Route,
 } from "react-router-dom";
-import Cast from "../../components/Cast/Cast";
-import Reviews from "../../components/Reviews/Reviews";
+// import Cast from "../../components/Cast/Cast";
+// import Reviews from "../../components/Reviews/Reviews";
 import * as movieInfoApi from "../../services/movies-info-api";
 import notFoundImg from "../../images/not-found-image.jpg";
+import Load from "../../components/Loader/Loader";
 import s from "./MovieDetailsPage.module.css";
 
 function MovieDetailsPage() {
@@ -21,6 +22,13 @@ function MovieDetailsPage() {
 
   const { movieId } = useParams();
   const { path, url } = useRouteMatch();
+
+  const Cast = lazy(() =>
+    import("../../components/Cast/Cast" /* webpackChunkName: "cast" */)
+  );
+  const Reviews = lazy(() =>
+    import("../../components/Reviews/Reviews" /* webpackChunkName: "reviews" */)
+  );
 
   useEffect(() => {
     movieInfoApi.getMovieById(movieId).then((data) => {
@@ -124,12 +132,14 @@ function MovieDetailsPage() {
             </div>
           </div>
 
-          <Route path={`${path}/credits`}>
-            <Cast movieId={movieId} url={getImageUrl(185)} />
-          </Route>
-          <Route path={`${path}/reviews`}>
-            <Reviews movieId={movieId} />
-          </Route>
+          <Suspense fallback={<Load />}>
+            <Route path={`${path}/credits`}>
+              <Cast movieId={movieId} url={getImageUrl(185)} />
+            </Route>
+            <Route path={`${path}/reviews`}>
+              <Reviews movieId={movieId} />
+            </Route>
+          </Suspense>
         </>
       )}
     </>
