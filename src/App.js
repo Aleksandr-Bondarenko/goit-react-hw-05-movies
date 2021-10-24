@@ -1,8 +1,9 @@
 import { Route, Switch } from "react-router";
 import AppBar from "./components/AppBar/AppBar";
 import HomePage from "./pages/HomePage";
-import MoviesPage from "./pages/MoviesPage";
-import MovieDetailsPage from "./pages/MovieDetailsPage";
+import MoviesPage from "./pages/MoviesPage/MoviesPage";
+import MovieDetailsPage from "./pages/MovieDetailsPage/MovieDetailsPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import "./App.css";
 
 function App() {
@@ -20,6 +21,10 @@ function App() {
 
         <Route path="/movies/:movieId">
           <MovieDetailsPage />
+        </Route>
+
+        <Route>
+          <NotFoundPage />
         </Route>
       </Switch>
     </div>

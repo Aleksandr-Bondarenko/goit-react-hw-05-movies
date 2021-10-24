@@ -1,30 +1,37 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import scrollTo from "../../js/scrollTo";
 import * as MovieInfoApi from "../../services/movies-info-api";
+import s from "./Reviews.module.css";
 
 function Reviews({ movieId }) {
   const [reviewsData, setReviewsData] = useState(null);
 
   useEffect(() => {
     MovieInfoApi.getMovieReviews(movieId).then((data) => {
-      console.log(data.results);
       setReviewsData(data.results);
-      // scrollTo();
+      scrollTo();
     });
   }, [movieId]);
 
   return reviewsData && reviewsData.length !== 0 ? (
-    <ul>
+    <ul className={`${s.list} toScroll`}>
       {reviewsData.map((reviewsItem) => (
-        <li key={reviewsItem.id}>
-          <p>Author: {reviewsItem.author}</p>
-          <p>{reviewsItem.content}</p>
+        <li key={reviewsItem.id} className={s.item}>
+          <p className={s.author}>Author: {reviewsItem.author}</p>
+          <p className={s.content}>{reviewsItem.content}</p>
         </li>
       ))}
     </ul>
   ) : (
-    <p>We dont have any reviews for this movie.</p>
+    <p className={`${s.message} toScroll`}>
+      We dont have any reviews for this movie.
+    </p>
   );
 }
 
 export default Reviews;
+
+Reviews.propTypes = {
+  movieId: PropTypes.string,
+};

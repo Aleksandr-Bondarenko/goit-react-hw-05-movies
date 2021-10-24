@@ -1,8 +1,9 @@
 import Navigation from "../Navigation/Navigation";
+import s from "./AppBar.module.css";
 
 function AppBar() {
   return (
-    <div>
+    <div className={s.AppBar}>
       <Navigation />
     </div>
   );

@@ -1,0 +1,19 @@
+.list {
+  list-style: none;
+  text-align: center;
+  font-size: 18px;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.link {
+  color: #000000;
+  text-decoration: none;
+}
+
+.link:hover,
+.link:focus {
+  color: blue;
+}

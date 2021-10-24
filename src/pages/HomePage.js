@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useRouteMatch, useLocation } from "react-router-dom";
+import MoviesList from "../components/MoviesList/MoviesList";
 import * as moviesInfoApi from "../services/movies-info-api";
 
 function HomePage() {
   const [trendingMovies, setTrendingMovies] = useState(null);
-
   const location = useLocation();
+  const { url } = useRouteMatch();
 
   useEffect(() => {
     moviesInfoApi.getTrending().then((data) => setTrendingMovies(data.results));
@@ -13,21 +14,11 @@ function HomePage() {
 
   return (
     trendingMovies && (
-      <ul>
-        {trendingMovies.map((movie) => (
-          <li key={movie.id}>
-            {/* <NavLink to={`/movies/${movie.id}`}>{movie.title}</NavLink> */}
-            <NavLink
-              to={{
-                pathname: `/movies/${movie.id}`,
-                state: { from: location },
-              }}
-            >
-              {movie.title}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
+      <MoviesList
+        movies={trendingMovies}
+        location={location}
+        url={`${url}movies`}
+      />
     )
   );
 }

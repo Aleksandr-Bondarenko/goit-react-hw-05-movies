@@ -1,13 +1,7 @@
 function scrollTo() {
   return document
-    .querySelector(".additionalTitle")
+    .querySelector(".toScroll")
     .scrollIntoView({ block: "start", behavior: "smooth" });
-
-  //   return window.scrollTo({
-  //     // top: document.documentElement.scrollTop + (window.innerHeight - 80),
-  //     top: document.documentElement.scrollTop + window.innerHeight,
-  //     behavior: "smooth",
-  //   });
 }
 
 export default scrollTo;
